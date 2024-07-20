@@ -6,6 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
+
 # Spinner function for displaying a loading animation
 spinner() {
     local pid=$1
@@ -17,20 +18,6 @@ spinner() {
         printf "\b"
     done
     printf " \b"
-}
-s
-# "Please wait a minute" animation function
-wait_animation() {
-    local delay=1
-    local message="Please wait a minute"
-    printf "${CYAN}"
-    while true; do
-        printf "%s" "$message"
-        sleep $delay
-        printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-        printf "                  " # Clears the line
-        sleep $delay
-    done
 }
 
 # Function to validate domain format
@@ -44,17 +31,26 @@ validate_domain() {
     fi
 }
 
+# Check for required commands
+for cmd in assetfinder httprobe; do
+    if ! command -v $cmd &> /dev/null; then
+        echo -e "${RED}$cmd could not be found. Please install it to use this script.${NC}"
+        exit 1
+    fi
+done
+
 # Display script header and ASCII art banner
 echo -e "${CYAN}Subdomain Finder and Live Checker Tool${NC}"
 echo "=================================================================="
-echo "                                ___.    
-  ________ ________   __________\_ |__  
- /  ___/  |  \____ \_/ __ \_  __ \ __ \ 
- \___ \|  |  /  |_> >  ___/|  | \/ \_\ 
-/____  >____/|   __/ \___  >__|  |___  /
-     \/      |__|        \/          \/ "
-echo ""
-
+echo " _______           ______     _______ _________ _        ______   _______  _______ "
+echo "(  ____ \|\     /|(  ___ \   (  ____ \ \__   __/( (    /|(  __  \ (  ____ \(  ____ )"
+echo "| (    \/| )   ( || (   ) )  | (    \/   ) (   |  \  ( || (  \  )| (    \/| (    )|"
+echo "| (_____ | |   | || (__/ /   | (__       | |   |   \ | || |   ) || (__    | (____)|"
+echo "(_____  )| |   | ||  __ (    |  __)      | |   | (\ \) || |   | ||  __)   |     __)"
+echo "      ) || |   | || (  \ \   | (         | |   | | \   || |   ) || (      | (\ (   "
+echo "/\____) || (___) || )___) )  | )      ___) (___| )  \  || (__/  )| (____/\| ) \ \__"
+echo "\_______)(_______)|/ \___/   |/       \_______/|/    )_)(______/ (_______/|/   \__/"
+                                                                                   
 while true; do
     # Prompt user for domain input
     read -p "$(echo -e "${YELLOW}Enter your domain:${NC} ")" domain
@@ -81,24 +77,19 @@ while true; do
         exit 1
     fi
 
-    # Start "Please wait a minute" animation
-    wait_animation &
-    wait_pid=$!
-
     # Find subdomains using assetfinder
     echo -e "${CYAN}Finding subdomains for $domain${NC}"
     assetfinder "$domain" > subs &
-    spinner $!
+    assetfinder_pid=$!
+    spinner $assetfinder_pid
     echo ""
 
     # Check live subdomains using httprobe
     echo -e "${CYAN}Checking for live subdomains${NC}"
     cat subs | httprobe > live &
-    spinner $!
+    httprobe_pid=$!
+    spinner $httprobe_pid
     echo ""
-
-    # Stop "Please wait a minute" animation
-    kill $wait_pid > /dev/null 2>&1
 
     # Sort and display live subdomains
     sort -u live > sorted
@@ -117,20 +108,11 @@ done
 # ASCII art after the loop
 echo -e "${CYAN}"
 cat << "EOF"
-                                 
-                                 
-                                 
-                           ,---, 
-               ,---,     ,---.'| 
-           ,-+-. /  |    |   | : 
-   ,---.  ,--.'|'   |    |   | | 
-  /     \|   |  ,"' |  ,--.__| | 
- /    /  |   | /  | | /   ,'   | 
-.    ' / |   | |  | |.   '  /  | 
-'   ;   /|   | |  |/ '   ; |:  | 
-'   |  / |   | |--'  |   | '/  ' 
-|   :    |   |/      |   :    :| 
- \   \  /'---'        \   \  /   
-  ----'               ----'    
+    ______                __   ____           
+  / ____/___  ____  ____/ /  / __ )__  _____ 
+ / / __/ __ \/ __ \/ __  /  / __  / / / / _ \
+/ /_/ / /_/ / /_/ / /_/ /  / /_/ / /_/ /  __/
+\____/\____/\____/\__,_/  /_____/\__, /\___/ 
+                                /____/       
 EOF
 echo -e "${NC}"
