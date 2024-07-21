@@ -20,6 +20,25 @@ spinner() {
     printf " \b"
 }
 
+# Function to display a "Wait a minute" animation
+wait_animation() {
+    local delay=0.5
+    local text="Please wait a minute"
+    local spinstr='.'
+
+    echo -n -e "${CYAN}$text${NC}"
+
+    while ps -p $1 > /dev/null; do
+        for ((i=0; i<3; i++)); do
+            printf "."
+            sleep $delay
+        done
+        printf "\b\b\b\b\b"
+    done
+
+    echo -e "${NC}"
+}
+
 # Function to validate domain format
 validate_domain() {
     local domain=$1
@@ -81,14 +100,14 @@ while true; do
     echo -e "${CYAN}Finding subdomains for $domain${NC}"
     assetfinder "$domain" > subs &
     assetfinder_pid=$!
-    spinner $assetfinder_pid
+    wait_animation $assetfinder_pid
     echo ""
 
     # Check live subdomains using httprobe
     echo -e "${CYAN}Checking for live subdomains${NC}"
     cat subs | httprobe > live &
     httprobe_pid=$!
-    spinner $httprobe_pid
+    wait_animation $httprobe_pid
     echo ""
 
     # Sort and display live subdomains
