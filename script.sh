@@ -136,3 +136,5 @@ cat << "EOF"
                                 /____/       
 EOF
 echo -e "${NC}"
+
+echo "Hope to see you again soon!"
