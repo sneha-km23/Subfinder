@@ -7,26 +7,24 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Spinner function for displaying a loading animation
-spinner() {
-    local pid=$1
-    local delay=0.15
-    local spinstr='|/-\'
-    while ps -p $pid > /dev/null; do
-        printf "%c" "${spinstr:i++%${#spinstr}:1}"
-        sleep $delay
-        printf "\b"
-    done
-    printf " \b"
-}
-
-# Function to display a "Wait a minute" animation
+# Function to display a centered "Please wait a minute" animation
 wait_animation() {
     local delay=0.5
     local text="Please wait a minute"
     local spinstr='.'
+    local cols=$(tput cols)  # Get the number of columns in the terminal
 
-    echo -n -e "${CYAN}$text${NC}"
+    # Calculate the starting position to center the text
+    local pos=$(( (cols / 2) - (${#text} / 2) ))
+
+    echo -n -e "${CYAN}"  # Start with cyan color
+
+    # Print spaces to center the text
+    for ((i=0; i<$pos; i++)); do
+        printf " "
+    done
+
+    echo -n "$text"  # Print the centered text
 
     while ps -p $1 > /dev/null; do
         for ((i=0; i<3; i++)); do
@@ -36,7 +34,7 @@ wait_animation() {
         printf "\b\b\b\b\b"
     done
 
-    echo -e "${NC}"
+    echo -e "${NC}"  # Reset color after animation
 }
 
 # Function to validate domain format
@@ -69,7 +67,8 @@ echo "(_____  )| |   | ||  __ (    |  __)      | |   | (\ \) || |   | ||  __)   
 echo "      ) || |   | || (  \ \   | (         | |   | | \   || |   ) || (      | (\ (   "
 echo "/\____) || (___) || )___) )  | )      ___) (___| )  \  || (__/  )| (____/\| ) \ \__"
 echo "\_______)(_______)|/ \___/   |/       \_______/|/    )_)(______/ (_______/|/   \__/"
-                                                                                   
+echo -e "${NC}"
+
 while true; do
     # Prompt user for domain input
     read -p "$(echo -e "${YELLOW}Enter your domain:${NC} ")" domain
@@ -110,10 +109,12 @@ while true; do
     wait_animation $httprobe_pid
     echo ""
 
-    # Sort and display live subdomains
+    # Sort and display live subdomains in red color
     sort -u live > sorted
     echo -e "${GREEN}Live subdomains:${NC}"
-    cat sorted
+    while IFS= read -r line; do
+        echo -e "${RED}$line${NC}"
+    done < sorted
 
     # Prompt user to continue with another domain
     read -p "$(echo -e "${YELLOW}Do you want to continue with another domain? (yes/no):${NC} ")" continue
