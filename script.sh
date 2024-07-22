@@ -37,6 +37,21 @@ wait_animation() {
     echo -e "${NC}"  # Reset color after animation
 }
 
+# Function to display a rotating animation for closing message
+rotate_animation() {
+    local chars="/-\|"
+    local delay=0.1
+    local max_iters=20
+
+    for ((i=0; i<max_iters; i++)); do
+        for ((j=0; j<${#chars}; j++)); do
+            echo -en "${CYAN}Hope to see you again soon... ${chars:$j:1}${NC}" "\r"
+            sleep $delay
+        done
+    done
+    echo ""
+}
+
 # Function to validate domain format
 validate_domain() {
     local domain=$1
@@ -137,4 +152,7 @@ cat << "EOF"
 EOF
 echo -e "${NC}"
 
-echo "Hope to see you again soon!"
+# Animated closing message
+rotate_animation
+
+echo -e "${CYAN}Hope to see you again soon!${NC}"
