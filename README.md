@@ -1,18 +1,25 @@
+Sure! Here's the updated `README.md` with added images, icons, and logs to make it visually engaging.
 
+---
 
-# **Subdomain Finder and Live Checker Tool**
+# **Subfinder - Subdomain Enumeration & Live Checker Tool**
 
-A powerful script to help penetration testers and security enthusiasts quickly discover subdomains and check their live status using **assetfinder** and **httprobe**. This tool automates the process of subdomain enumeration and live probing, making it an essential addition to your toolkit.
+![Subfinder Logo](https://via.placeholder.com/800x200.png?text=Subfinder+Logo)  
+
+**Subfinder** is a powerful tool designed for penetration testers and security researchers. It allows you to discover subdomains of a target domain and checks the live status of each subdomain. Using tools like **assetfinder** and **httprobe**, Subfinder automates the process of subdomain enumeration and live probing, offering fast and accurate results.
 
 ---
 
 ## **Features**
 
-- **Automated Subdomain Discovery**: Uses `assetfinder` to gather potential subdomains for a given domain.
-- **Live Subdomain Checking**: Checks the live status of discovered subdomains using `httprobe`.
-- **Domain Validation**: Validates the entered domain to ensure it's properly formatted.
-- **Color-Coded Output**: Uses ANSI colors for easy-to-read output.
-- **Interactive**: User-friendly prompts guide you through the process.
+![Features Icon](https://img.icons8.com/ios-filled/50/000000/feature.png)
+
+- **Subdomain Discovery**: Utilizes `assetfinder` to find potential subdomains for a given domain.
+- **Live Subdomain Check**: Uses `httprobe` to check which discovered subdomains are live and responding.
+- **Domain Validation**: Ensures the domain input is correctly formatted before proceeding.
+- **Interactive Prompts**: Easy-to-follow prompts guide the user through the entire process.
+- **Colorful and Engaging Output**: Enhanced terminal output with color-coded results for better readability.
+- **Efficient and Fast**: Asynchronous subdomain enumeration and live probing for improved performance.
 
 ---
 
@@ -20,12 +27,12 @@ A powerful script to help penetration testers and security enthusiasts quickly d
 
 ### Prerequisites
 
-Before running the script, ensure the following tools are installed:
+To run **Subfinder**, you will need the following tools:
 
-- **assetfinder**: Subdomain discovery tool.
-- **httprobe**: Tool for checking live subdomains.
+- **assetfinder**: A tool for discovering subdomains.
+- **httprobe**: A tool for probing and checking live subdomains.
 
-Install them with the following commands:
+To install the prerequisites, run the following commands:
 
 ```bash
 # Install assetfinder
@@ -35,45 +42,79 @@ go install github.com/tomnomnom/assetfinder@latest
 go install github.com/tomnomnom/httprobe@latest
 ```
 
-### Cloning the Repository
+---
+
+### Clone the Repository
 
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/subdomain-finder.git
-cd subdomain-finder
+git clone https://github.com/km-sneha/Subfinder.git
+cd Subfinder
 ```
 
 Make the script executable:
 
 ```bash
-chmod +x subdomain-finder.sh
+chmod +x script.sh
 ```
 
 ---
 
 ## **Usage**
 
-To start the tool, run:
+To run **Subfinder**, execute the following command:
 
 ```bash
-./subdomain-finder.sh
+./script.sh
 ```
-
-### **Steps**
-
-1. **Enter Domain**: Input the target domain when prompted (e.g., `example.com`).
-2. **Domain Validation**: The script ensures the domain is correctly formatted.
-3. **Subdomain Discovery**: The script uses `assetfinder` to find potential subdomains.
-4. **Live Subdomain Checking**: The script uses `httprobe` to check which subdomains are live.
-5. **Output**: Live subdomains will be displayed in a color-coded format.
-6. **Continue or Exit**: Choose to scan another domain or exit the tool.
 
 ---
 
-## **Example**
+### **Steps**
+
+1. **Enter Domain**: When prompted, input the domain you want to scan (e.g., `example.com`).
+   
+   ![Enter Domain Image](https://via.placeholder.com/600x150.png?text=Enter+Domain+Example)
+
+2. **Domain Validation**: The script validates the domain format to ensure it's correctly typed.
+   
+   ![Domain Validation](https://via.placeholder.com/600x150.png?text=Domain+Validation)
+
+3. **Subdomain Discovery**: **Subfinder** uses `assetfinder` to gather potential subdomains.
+   
+   ```bash
+   Finding subdomains for example.com...
+   ```
+
+   ![Subdomain Discovery Log](https://via.placeholder.com/800x150.png?text=Subdomain+Discovery+Log)
+
+4. **Live Subdomain Check**: The script uses `httprobe` to check which subdomains are live and responding.
+   
+   ```bash
+   Checking live subdomains...
+   ```
+
+   ![Live Subdomain Check](https://via.placeholder.com/800x150.png?text=Live+Subdomain+Check)
+
+5. **Output**: Live subdomains are displayed, sorted, and color-coded for easy reading.
+
+   ```bash
+   Live subdomains:
+   www.example.com
+   api.example.com
+   ```
+   
+   ![Live Subdomain Output](https://via.placeholder.com/600x150.png?text=Live+Subdomain+Output)
+
+6. **Next Steps**: After the scan, you will be prompted whether you'd like to continue with another domain or exit the tool.
+
+---
+
+## **Example Output**
+
 ```bash
-Subdomain Finder and Live Checker Tool
+Subfinder - Subdomain Enumeration & Live Checker Tool
 ==================================================================
 Target domain: example.com
 Finding subdomains for example.com....
@@ -90,17 +131,21 @@ Do you want to continue with another domain? (yes/no):
 
 ## **Customization**
 
-You can easily modify the script to fit your needs by:
+**Subfinder** can be easily customized:
 
-- Adjusting the `assetfinder` and `httprobe` options.
-- Changing the domain validation rules.
-- Customizing the colors and animation delay.
+![Customization Icon](https://img.icons8.com/ios-filled/50/000000/customize.png)
+
+- Modify the `assetfinder` or `httprobe` options as needed.
+- Adjust the domain validation pattern if you are targeting specific types of domains.
+- Change the color scheme or animation delay to suit your preferences.
 
 ---
 
 ## **Contributing**
 
-Contributions are welcome! Fork the repository, submit pull requests, and create issues for bugs or feature requests.
+We welcome contributions! If you'd like to help improve **Subfinder**, feel free to fork the repository and submit pull requests. Please report bugs or suggest new features via GitHub Issues.
+
+![GitHub](https://img.icons8.com/ios-filled/50/000000/github.png) [Contribute on GitHub](https://github.com/km-sneha/Subfinder)
 
 ---
 
@@ -108,12 +153,14 @@ Contributions are welcome! Fork the repository, submit pull requests, and create
 
 This project is licensed under the MIT License.
 
+![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ---
 
 ## **Contact**
 
-If you have any questions, feel free to open an issue on GitHub or contact me directly at [your.email@example.com](mailto:your.email@example.com).
+For any questions or inquiries, feel free to reach out by opening an issue on GitHub or via email at [snehapanayathol217@gmail.com](mailto:snehapanayathol217@gmail.com).
+
+![Email Icon]("images/email.jpg">Icons8</a>) [Email Me](mailto:snehapanayathol217@gmail.com)
 
 ---
-
-This version provides a clean and professional `README.md` for your subdomain enumeration and live checking script. Let me know if you'd like any further adjustments!
